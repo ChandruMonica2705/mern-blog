@@ -36,7 +36,7 @@ function Header() {
           pill>
      <FaMoon />
         </Button>
-        <Link to='/sihn-in'>
+        <Link to='/sign-in'>
         <Button gradientDuoTone='purpleToBlue' outline>
             Sign In
         </Button>
