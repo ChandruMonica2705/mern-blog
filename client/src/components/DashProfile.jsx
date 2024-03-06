@@ -1,4 +1,4 @@
-import { Alert, Button, TextInput } from 'flowbite-react';
+import { Alert, Button, Modal, ModalBody,TextInput } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -13,11 +13,14 @@ import 'react-circular-progressbar/dist/styles.css';
 import {
   updateStart,
   updateSuccess,
-  updateFailure
+  updateFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -28,7 +31,7 @@ export default function DashProfile() {
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
-  // const [showModal, setShowModal] = useState(false);
+ const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
   const dispatch = useDispatch();
@@ -128,23 +131,23 @@ export default function DashProfile() {
       setUpdateUserError(error.message);
     }
   };
-  // const handleDeleteUser = async () => {
-  //   setShowModal(false);
-  //   try {
-  //     dispatch(deleteUserStart());
-  //     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-  //       method: 'DELETE',
-  //     });
-  //     const data = await res.json();
-  //     if (!res.ok) {
-  //       dispatch(deleteUserFailure(data.message));
-  //     } else {
-  //       dispatch(deleteUserSuccess(data));
-  //     }
-  //   } catch (error) {
-  //     dispatch(deleteUserFailure(error.message));
-  //   }
-  // };
+   const handleDeleteUser = async () => {
+     setShowModal(false);
+     try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(deleteUserFailure(data.message));
+      } else {
+        dispatch(deleteUserSuccess(data));
+    }
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+   };
 
   // const handleSignout = async () => {
   //   try {
@@ -273,7 +276,7 @@ export default function DashProfile() {
           {error}
         </Alert>
       )}
-      {/* <Modal
+       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
         popup
@@ -296,7 +299,7 @@ export default function DashProfile() {
             </div>
           </div>
         </Modal.Body>
-      </Modal> */}
+      </Modal> 
     </div>
   );
 }
