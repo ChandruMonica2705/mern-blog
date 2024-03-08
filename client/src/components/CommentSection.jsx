@@ -2,7 +2,7 @@ import { Alert, Button, Modal, TextInput, Textarea } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-//import Comment from './Comment';
+import Comment from './Comment';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 export default function CommentSection({ postId }) {
@@ -13,6 +13,7 @@ export default function CommentSection({ postId }) {
   const [showModal, setShowModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
   const navigate = useNavigate();
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (comment.length > 200) {
@@ -34,11 +35,11 @@ export default function CommentSection({ postId }) {
       if (res.ok) {
         setComment('');
         setCommentError(null);
-        setComments([data, ...comments]);
+      setComments([data, ...comments]);
       }
-    } catch (error) {
-      setCommentError(error.message);
-    }
+   } catch (error) {
+       setCommentError(error.message);
+     }
   };
 
   useEffect(() => {
@@ -159,20 +160,20 @@ export default function CommentSection({ postId }) {
             <Alert color='failure' className='mt-5'>
               {commentError}
             </Alert>
-          )}
+          )} 
         </form>
       )}
-      {comments.length === 0 ? (
+       {comments.length === 0 ? (
         <p className='text-sm my-5'>No comments yet!</p>
-      ) : (
-        <>
+      ) : ( 
+         <>
           <div className='text-sm my-5 flex items-center gap-1'>
             <p>Comments</p>
-            <div className='border border-gray-400 py-1 px-2 rounded-sm'>
-              <p>{comments.length}</p>
-            </div>
-          </div>
-          {comments.map((comment) => (
+            <div className='border border-gray-400 py-1 px-2 rounded-sm'> 
+               <p>{comments.length}</p> 
+             </div>
+          </div> 
+           {comments.map((comment) => (
             <Comment
               key={comment._id}
               comment={comment}
@@ -184,8 +185,8 @@ export default function CommentSection({ postId }) {
               }}
             />
           ))}
-        </>
-      )}
+         </> 
+      )} 
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
